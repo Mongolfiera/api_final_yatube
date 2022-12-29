@@ -6,7 +6,7 @@ from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
 )
 
-from posts.models import Comment, Follow, Group, Post
+from posts.models import Follow, Group, Post
 from . import permissions, serializers
 
 
@@ -30,7 +30,6 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = (
         IsAuthenticatedOrReadOnly,
@@ -46,9 +45,11 @@ class CommentViewSet(viewsets.ModelViewSet):
         return post.comments.all()
 
 
-class FollowViewSet(mixins.CreateModelMixin,
-                    mixins.ListModelMixin,
-                    viewsets.GenericViewSet):
+class FollowViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet
+):
     queryset = Follow.objects.all()
     serializer_class = serializers.FollowSerializer
     permission_classes = (IsAuthenticated, permissions.IsAuthorOrReadOnly,)
