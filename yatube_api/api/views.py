@@ -50,7 +50,6 @@ class FollowViewSet(
     mixins.ListModelMixin,
     viewsets.GenericViewSet
 ):
-    queryset = Follow.objects.all()
     serializer_class = serializers.FollowSerializer
     permission_classes = (IsAuthenticated, permissions.IsAuthorOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
